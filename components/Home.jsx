@@ -4,15 +4,15 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
-  FlatList,
   SectionList,
   StyleSheet,
   Image,
+  TouchableWithoutFeedback,
+  Keyboard
 } from "react-native";
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const Home = ({profileImage,messages,userinfo}) => {
-  console.log(messages, userinfo);
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const [fileattachments,setFileattachments]=useState(false);
 
@@ -43,7 +43,15 @@ const Home = ({profileImage,messages,userinfo}) => {
     setFileattachments(!fileattachments);
   };
 
+  const hidePopups = () => {
+    setDropdownVisible(false);
+    setFileattachments(false);
+    Keyboard.dismiss(); // Close the keyboard if open
+  };
+  
+
   return (
+    <TouchableWithoutFeedback onPress={hidePopups}>
     <View style={styles.container}>
       {/* Header */}
       <View style={styles.header}>
@@ -169,6 +177,7 @@ const Home = ({profileImage,messages,userinfo}) => {
         </View>
       </View>
     </View>
+    </TouchableWithoutFeedback>
   );
 };
 
